@@ -1,0 +1,7 @@
+/build
+*.coffee.js
+webfrontend/zooniverse-import.js
+webfrontend/zooniverse-import.css
+__pycache__
+*.pyc
+.DS_Store

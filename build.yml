@@ -1,0 +1,26 @@
+# Build configuration for fylr-build-plugin — the explicit build description.
+# Delivered files are listed here; "check" (runs with every build) warns when
+# a manifest reference is missing from the build folder.
+# All features: https://github.com/programmfabrik/fylr-build-plugin
+
+server:
+  # the python extension incl. the fylr-lib-plugin-python3 submodule
+  # (its .git pointer never ships), plus the fylr loca CSV
+  install:
+    - server
+    - l10n
+
+webfrontend:
+  # CoffeeScript 1.x, compiled + concatenated in this order into
+  # plugin.webfrontend.url (webfrontend/zooniverse-import.js)
+  coffee1:
+    - webfrontend/ZooniverseImport.coffee
+    - webfrontend/ZooniverseImportBaseConfig.coffee
+    - webfrontend/ZooniverseImportMenuApp.coffee
+  scss:
+    - webfrontend/zooniverse-import.scss
+
+loca:
+  - csv: l10n/fylr-plugin-zooniverse-import.csv
+    sheet: 1xjW0kEXf57soA0nWIczKFEMmaRHvnSF4hWH7Si0pBAk
+    gid: 0

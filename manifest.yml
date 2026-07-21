@@ -1,0 +1,119 @@
+plugin:
+  name: fylr-plugin-zooniverse-import
+  version: "1.0"
+  url: https://github.com/programmfabrik/fylr-plugin-zooniverse-import
+  displayname:
+    de-DE: Zooniverse Import Plugin
+    en-US: Zooniverse Import Plugin
+  info:
+    de-DE: Liest CSV-Exporte aus Zooniverse ein und schreibt die Annotationen in bestehende Datensätze.
+    en-US: Reads CSV exports from Zooniverse and writes the annotations into existing records.
+  l10n: l10n/fylr-plugin-zooniverse-import.csv
+  webfrontend:
+    url: zooniverse-import.js
+    css: zooniverse-import.css
+
+base_url_prefix: webfrontend
+
+system_rights:
+  - name: allow_use
+    group: zooniverse_import
+    comment: "lets these users open the Zooniverse import from the plugin menu"
+
+# The webfrontend sends the parsed CSV rows to this endpoint. The endpoint
+# matches them against existing records and returns the objects to write.
+# endpoint: <fylr url>/api/v1/plugin/extension/fylr-plugin-zooniverse-import/zooniverse_import
+extensions:
+  zooniverse_import:
+    exec:
+      service: "python3"
+      commands:
+        - prog: "python3"
+          stdin:
+            type: "body"
+          stdout:
+            type: "body"
+          args:
+            - type: "value"
+              value: "%_exec.pluginDir%/server/main.py"
+            - type: "value"
+              value: "%info.json%"
+
+custom_events:
+  - ZOONIVERSE_IMPORT_INSERT
+  - ZOONIVERSE_IMPORT_UPDATE
+  - ZOONIVERSE_IMPORT_ERROR
+
+base_config:
+
+  - name: zooniverse_import_mappings
+    group: zooniverse_import
+    parameters:
+      mappings:
+        type: table
+        position: 0
+        fields:
+          - name: enabled
+            type: bool
+            default: true
+            position: 0
+
+          - name: update_objecttype
+            type: text
+            plugin_type: update_objecttype
+            position: 1
+
+          - name: match_column
+            type: text
+            plugin_type: match_column
+            position: 2
+
+          - name: update_column_t0
+            type: text
+            plugin_type: update_column_t0
+            position: 3
+          - name: split_update_column_t0
+            type: bool
+            position: 4
+
+          - name: update_column_t1
+            type: text
+            plugin_type: update_column_t1
+            position: 5
+          - name: split_update_column_t1
+            type: bool
+            position: 6
+
+          - name: update_column_t2
+            type: text
+            plugin_type: update_column_t2
+            position: 7
+          - name: split_update_column_t2
+            type: bool
+            position: 8
+
+          - name: update_column_t3
+            type: text
+            plugin_type: update_column_t3
+            position: 9
+          - name: split_update_column_t3
+            type: bool
+            position: 10
+
+          - name: update_column_t4
+            type: text
+            plugin_type: update_column_t4
+            position: 11
+          - name: split_update_column_t4
+            type: bool
+            position: 12
+
+          - name: update_column_created_at
+            type: text
+            plugin_type: update_column_created_at
+            position: 13
+
+          - name: update_column_user_name
+            type: text
+            plugin_type: update_column_user_name
+            position: 14
